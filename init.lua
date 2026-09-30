@@ -1,0 +1,155 @@
+-- Testing
+require("plugins.ccls")
+require("plugins.blink")
+require("plugins.telescope")
+require("plugins.nio")
+require("plugins.dap")
+require("plugins.dapui")
+require("plugins.virtual-text")
+require("plugins.which-key")
+
+require("config.keymaps")
+
+require("faust")
+
+vim.pack.add({
+  "https://github.com/olimorris/onedarkpro.nvim",
+})
+
+vim.lsp.config('faustlsp', {
+    cmd = { 'faustlsp' },
+    filetypes = {'faust'},
+	workspace_required = true,
+	root_markers = { '.faustcfg.json' }
+})
+
+vim.lsp.config('clangd', {
+    cmd = {
+        '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clangd',
+    },
+})
+vim.lsp.enable('clangd')
+
+vim.cmd.colorscheme("onedark")
+
+vim.opt.expandtab = true -- Convert tabs to spaces
+vim.opt.shiftwidth = 4 -- Amount to indent with << and >>
+vim.opt.tabstop = 4 -- How many spaces are shown per Tab
+vim.opt.softtabstop = 4 -- How many spaces are applied when pressing Tab
+
+vim.opt.smarttab = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true -- Keep identation from previous line
+
+-- Enable break indent
+vim.opt.breakindent = true
+
+-- Always show relative line numbers
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+-- Show line under cursor
+vim.opt.cursorline = true
+
+-- Store undos between sessions
+vim.opt.undofile = true
+
+-- Use the system clipboard for yank/delete/change — paste with Ctrl+V elsewhere.
+-- Note: this also routes deletes (d, c, x) through the clipboard.
+vim.opt.clipboard = "unnamedplus"
+
+-- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Keep signcolumn on by default
+vim.opt.signcolumn = "yes"
+
+-- Configure how new splits should be opened
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- Sets how neovim will display certain whitespace characters in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 5
+
+-- Timeout length for multi key hotkeys
+vim.opt.timeoutlen = 500
+
+-- How long the cursor must sit still before CursorHold fires (used by the
+-- LSP diagnostic auto-popup). Default is 4000ms, way too slow.
+vim.opt.updatetime = 250
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- disable netrw for nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- Keep multiple buffers and open multiple buffers
+hidden = true
+
+-- Always show tabline
+vim.o.showtabline = 2
+
+-- Project-local config: when nvim starts in a directory containing a
+-- `.nvim.lua` (or `.nvimrc`/`.exrc`), source it. This is how a project layers
+-- extra settings / LSP servers on top of this base config without launching
+-- nvim a special way. Gated by `vim.secure`: the first time nvim sees a given
+-- file it prompts to trust it (`:trust`) and remembers the hash, so an
+-- untrusted file in someone else's repo can't run code silently.
+-- See README.md → "Per-project configuration".
+vim.o.exrc = true
+
+-- Show a vertical line at column 80 for programming files
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = {
+		"c",
+		"cpp",
+		"python",
+		"rust",
+		"go",
+		"java",
+		"javascript",
+		"typescript",
+		"javascriptreact",
+		"typescriptreact",
+		"lua",
+		"sh",
+		"bash",
+		"zsh",
+		"fish",
+		"ruby",
+		"php",
+		"perl",
+		"haskell",
+		"ocaml",
+		"elixir",
+		"erlang",
+		"scala",
+		"kotlin",
+		"swift",
+		"cs",
+		"fsharp",
+		"clojure",
+		"nix",
+		"vim",
+		"sql",
+		"r",
+		"julia",
+		"dart",
+		"zig",
+	},
+	callback = function()
+		vim.opt_local.colorcolumn = "80"
+	end,
+})

@@ -1,0 +1,1 @@
+require("faust.commands.play");
